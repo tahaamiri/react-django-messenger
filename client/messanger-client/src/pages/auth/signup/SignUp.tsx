@@ -1,94 +1,116 @@
-import React from "react";
+import React, { useState } from "react";
+import { SignUpNewUser } from "./SignUp.interface";
 import PATH from "../../../paths/paths";
-import SignIn from "../../../assets/images/signin.jpg";
+import { AiFillEyeInvisible } from "react-icons/ai";
+import { AiFillEye } from "react-icons/ai";
+import { AiOutlineArrowRight } from "react-icons/ai";
 import { Link } from "react-router-dom";
 
 const SignUp = () => {
-	const formSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
-		event.preventDefault();
+	const [newUser, setNewUser] = useState<SignUpNewUser>({
+		email: "",
+		username: "",
+		password: "",
+		re_password: "",
+	});
+	const [passwordType, setPasswordType] = useState<string>("password");
+	const showPassword = () => {
+		setPasswordType(passwordType === "input" ? "password" : "input");
 	};
 
 	return (
-		<div className="p-10 h-screen my-auto md:grid md:grid-cols-2">
-			<div className="hidden md:block w-full py-20">
-				<img src={SignIn} alt="Signin to your account" width={500} />
-			</div>
-			<div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-				<div className="max-w-md w-full space-y-8">
-					<div>
-						<h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Create new accunt</h2>
+		<div className="h-screen w-full bg-slate-900 text-white">
+			<div className="mx-auto max-w-sm h-full py-16">
+				<div className="text-center space-y-5">
+					<h1 className="font-extrabold text-4xl">Messanger</h1>
+					<h2 className="font-bold text-2xl">Create New Accunt</h2>
+				</div>
+				<div className="flex flex-col mt-10 space-y-16 p-8 ">
+					<div className="space-y-3">
+						<div className="flex flex-col justify-center text-left">
+							<label className="text-base font-bold" htmlFor="email">
+								Email:
+							</label>
+							<input
+								className="bg-gray-800 rounded-md  w-full py-5 px-3 outline-none"
+								onChange={(event) =>
+									setNewUser({ ...newUser, email: event.target.value })
+								}
+								value={newUser.email}
+								type="text"
+								id="email"
+							/>
+						</div>
+						<div className="flex flex-col justify-center text-left">
+							<label className="text-base font-bold" htmlFor="username">
+								Username:
+							</label>
+							<input
+								className="bg-gray-800 rounded-md  w-full py-5 px-3 outline-none"
+								onChange={(event) =>
+									setNewUser({ ...newUser, username: event.target.value })
+								}
+								value={newUser.username}
+								type="text"
+								id="username"
+							/>
+						</div>
+						<div className="relative flex flex-col justify-center text-left">
+							<label className="text-base font-bold" htmlFor="password">
+								Password:
+							</label>
+							<input
+								className="bg-gray-800 rounded-md  w-full py-5 px-3 outline-none"
+								onChange={(event) =>
+									setNewUser({ ...newUser, password: event.target.value })
+								}
+								value={newUser.password}
+								type={passwordType}
+								id="password"
+							/>
+							<span className="absolute top-12 right-5" onClick={showPassword}>
+								{passwordType === "input" ? (
+									<AiFillEyeInvisible />
+								) : (
+									<AiFillEye />
+								)}
+							</span>
+						</div>
+						<div className="relative flex flex-col justify-center text-left">
+							<label className="text-base font-bold" htmlFor="password-repeat">
+								Repeat Password:
+							</label>
+							<input
+								className="bg-gray-800 rounded-md  w-full py-5 px-3 outline-none"
+								onChange={(event) =>
+									setNewUser({ ...newUser, re_password: event.target.value })
+								}
+								value={newUser.re_password}
+								type={passwordType}
+								id="password-repeat"
+							/>
+							<span className="absolute top-12 right-5" onClick={showPassword}>
+								{passwordType === "input" ? (
+									<AiFillEyeInvisible />
+								) : (
+									<AiFillEye />
+								)}
+							</span>
+						</div>
 					</div>
-					<form onSubmit={formSubmitHandler} className="mt-8 space-y-5" action="#" method="POST">
-						<input type="hidden" name="remember" value="true" />
-						<div className="rounded-md shadow-sm space-y-2">
-							<div>
-								<label htmlFor="email-address" className="">
-									Email address
-								</label>
-								<input
-									id="email-address"
-									name="email"
-									type="text"
-									className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-									placeholder="Email address"
-								/>
-							</div>
-							<div>
-								<label htmlFor="username" className="">
-									Username
-								</label>
-								<input
-									id="username"
-									name="username"
-									type="text"
-									className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-									placeholder="user name"
-								/>
-							</div>
-							<div>
-								<label htmlFor="password" className="">
-									Password
-								</label>
-								<input
-									id="password"
-									name="password"
-									type="password"
-									className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-									placeholder="Password"
-								/>
-							</div>
-							<div>
-								<label htmlFor="r-password" className="">
-									Repeat Password
-								</label>
-								<input
-									id="r-password"
-									name="r-password"
-									type="password"
-									className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-									placeholder="Repeat Password"
-								/>
-							</div>
-						</div>
-						<div>
-							<button
-								type="submit"
-								className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-							>
-								Submit
-							</button>
-						</div>
-						<div>
+					<div className="flex flex-col justify-center space-y-3">
+						<button className="font-bold bg-gradient-to-r from-pink-500 to-yellow-500 rounded-md w-full py-5 px-3">
+							Create Account
+						</button>
+						<div className="flex justify-start items-center font-medium">
 							<Link to={PATH.auth.login}>
-								<button
-									type="submit"
-									className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-red-500 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-								>
-									Back to login page
-								</button>
+								<div className="flex items-center">
+									<span className="mr-2">Back To Login Page </span>
+									<AiOutlineArrowRight style={{ color: "white" }} />
+								</div>
 							</Link>
 						</div>
-					</form>
+					</div>
 				</div>
 			</div>
 		</div>
